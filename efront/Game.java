@@ -36,11 +36,7 @@ public class Game
     {
         return path;
     }
-<<<<<<< HEAD
-        public String toString()
-=======
     public String toString()
->>>>>>> 904f9c24ada0f15c28f774571cbec0e80b08b538
     {
         return name;
     }
