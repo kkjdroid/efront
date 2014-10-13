@@ -28,12 +28,22 @@ public class Console
     private String bin;
     private String name;
     private ArrayList<Game> games;
+    private String finalArgs;
     
     public Console(String name, String bin)
     {
         this.bin = bin;
         this.name = name;
         this.games = new ArrayList<Game>();
+        this.finalArgs = "";
+    }
+    
+    public Console(String name, String bin, String arg)
+    {
+       this.bin = bin;
+        this.name = name;
+        this.games = new ArrayList<Game>();
+        this.finalArgs = arg;
     }
     
     public ArrayList<Game> getGames()
@@ -51,15 +61,15 @@ public class Console
         else return false;
     }
     
-    public boolean removeGame(Game game)
+    public boolean removeGame(int game)
     {
-        if(!games.contains(game))
+        if(games.size() < game - 1)
         {
             return false;
         }
         else
         {
-            games.remove(games.indexOf(game));
+            games.remove(game);
             return true;
         }
     }
@@ -73,7 +83,7 @@ public class Console
     {
         try
         {
-            Process process = Runtime.getRuntime().exec(bin + games.get(game).getPath());
+            Process process = Runtime.getRuntime().exec(bin + games.get(game).getPath() + finalArgs);
             System.out.print(bin + games.get(game).getPath());
         }
         catch(IOException e)

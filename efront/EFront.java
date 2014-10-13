@@ -16,21 +16,24 @@
  */
 package efront;
 
+import java.io.IOException;
+import java.nio.charset.StandardCharsets;
+import java.nio.file.FileSystems;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Text;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-import javafx.event.EventHandler;
-import javafx.event.ActionEvent;
-import java.nio.file.Path;
-import java.nio.file.Files;
-import java.nio.file.FileSystems;
-import java.nio.charset.StandardCharsets;
-import java.io.IOException;
+import javafx.scene.control.TextField;
 
 /**
  *
@@ -41,6 +44,8 @@ public class EFront extends Application
     BorderPane border = new BorderPane();
     private int selectedGame = 0;
     private int selectedConsole = 0;
+    private ArrayList<Console> systems = new ArrayList();
+    
     @Override
     public void start(Stage primaryStage) 
     {
@@ -69,7 +74,9 @@ public class EFront extends Application
         left.setPadding(new Insets(5,5,5,5));
         left.setSpacing(5);
         ArrayList<Button> temp = new ArrayList<Button>();
-        for (Console sys : getSystems())
+        if(systems.size() == 0) loadTempSystems();
+        //loadConfig();
+        for (Console sys : systems)
         {
             temp.add(new Button(sys.toString()));
         }
@@ -106,20 +113,95 @@ public class EFront extends Application
             {
                 @Override public void handle(ActionEvent e) 
                 {
-                    getSystems().get(selectedConsole).runGame(selectedGame);
+                    systems.get(selectedConsole).runGame(selectedGame);
                 }
             });
-        
+        buttons.get(1).setOnAction(new EventHandler<ActionEvent>() 
+            {
+                @Override public void handle(ActionEvent e) 
+                {
+                    final Stage dialog = new Stage();
+                    dialog.setTitle("Add a new game");
+                    dialog.initModality(Modality.APPLICATION_MODAL);
+                    VBox dialogVbox = new VBox(20);
+                    final TextField name = new TextField("Name");
+                    final TextField path = new TextField("Full file path");
+                    Button b = new Button("OK");
+                    b.setOnAction(new EventHandler<ActionEvent>() 
+                    {
+                        @Override public void handle(ActionEvent e) 
+                        {
+                            systems.get(selectedConsole).addGame(new Game(name.getCharacters().toString(),path.getCharacters().toString()));
+                            System.out.print(name.getCharacters().toString() + path.getCharacters().toString());
+                            midPane();
+                            dialog.close();
+                        }
+                    });
+                dialogVbox.getChildren().add(name);
+                dialogVbox.getChildren().add(path);
+                dialogVbox.getChildren().add(b);
+                Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                dialog.setScene(dialogScene);
+                dialog.show();
+                }
+            });
+        buttons.get(2).setOnAction(new EventHandler<ActionEvent>() 
+            {
+                @Override public void handle(ActionEvent e) 
+                {
+                    systems.get(selectedConsole).removeGame(selectedGame);
+                    midPane();
+                }
+            });
+        buttons.get(3).setOnAction(new EventHandler<ActionEvent>()
+            {
+                @Override public void handle(ActionEvent e)
+                {
+                    final Stage dialog = new Stage();
+                    dialog.setTitle("Add a new game");
+                    dialog.initModality(Modality.APPLICATION_MODAL);
+                    VBox dialogVbox = new VBox(20);
+                    final TextField name = new TextField("Name");
+                    final TextField path = new TextField("Full file path");
+                    Button b = new Button("OK");
+                    b.setOnAction(new EventHandler<ActionEvent>() 
+                    {
+                        @Override public void handle(ActionEvent e) 
+                        {
+                            systems.add(new Console(name.getCharacters().toString(),path.getCharacters().toString()));
+                            System.out.print(name.getCharacters().toString() + path.getCharacters().toString());
+                            border.setLeft(leftPane());
+                            dialog.close();
+                        }
+                    });
+                dialogVbox.getChildren().add(name);
+                dialogVbox.getChildren().add(path);
+                dialogVbox.getChildren().add(b);
+                Scene dialogScene = new Scene(dialogVbox, 300, 200);
+                dialog.setScene(dialogScene);
+                dialog.show();
+                }
+            });
+        buttons.get(4).setOnAction(new EventHandler<ActionEvent>()
+            {
+                @Override public void handle(ActionEvent e)
+                {
+                    System.out.print(selectedConsole);
+                    System.out.print(systems.get(selectedConsole));
+                    systems.remove(selectedConsole);
+                    border.setLeft(leftPane());
+                }
+            
+            });
         right.getChildren().addAll(buttons);
         return right;
     }
     
-    private ArrayList<Console> getSystems()
+    private ArrayList<Console> loadTempSystems()
     {
-        ArrayList<Console> systems = new ArrayList();
-        systems.add(new Console("Steam","cmd -c \"start steam://run/"));
+        systems.add(new Console("Steam","cmd /c \"start steam://run/","\""));
         systems.add(new Console("Gamecube","C:\\Program Files\\Dolphin\\Dolphin.exe -b -e "));
-        systems.get(0).addGame(new Game("Team Fortress 2","440\""));
+        systems.get(0).addGame(new Game("Team Fortress 2","440"));
         systems.get(0).addGame(new Game("Sid Meier's Civilization V","36075"));
         systems.get(0).addGame(new Game("Dust: An Elysian Tail","236090"));
         systems.get(1).addGame(new Game("Project M","C:\\Users\\Kenny\\Downloads\\PM\\ProjectM.iso"));
@@ -132,7 +214,7 @@ public class EFront extends Application
         mid.setPadding(new Insets(5,5,5,5));
         mid.setSpacing(5);
         ArrayList<Button> temp = new ArrayList();
-        final ArrayList<Game> games = getSystems().get(selectedConsole).getGames();
+        final ArrayList<Game> games = systems.get(selectedConsole).getGames();
         for(Game game : games)
         {
             temp.add(new Button(game.getName()));
@@ -153,19 +235,6 @@ public class EFront extends Application
     }
     private void loadConfig()
     {
-        Path config = FileSystems.getDefault().getPath("efront.ini");
-        ArrayList<String> file;
-        try
-        {
-            file = (ArrayList)Files.readAllLines(config,StandardCharsets.UTF_8);
-        }
-        catch(IOException e)
-        {
-            try
-            {
-                config = Files.createFile(config);
-            }
-            catch(IOException f){}
-        }
+        Config config = new Config("efront.cfg");
     }
 }
