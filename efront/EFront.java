@@ -16,6 +16,7 @@
  */
 package efront;
 
+<<<<<<< HEAD
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.FileSystems;
@@ -25,15 +26,30 @@ import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+=======
+import java.util.ArrayList;
+import javafx.application.Application;
+>>>>>>> 904f9c24ada0f15c28f774571cbec0e80b08b538
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
+<<<<<<< HEAD
 import javafx.scene.text.Text;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.scene.control.TextField;
+=======
+import javafx.stage.Stage;
+import javafx.event.EventHandler;
+import javafx.event.ActionEvent;
+import java.nio.file.Path;
+import java.nio.file.Files;
+import java.nio.file.FileSystems;
+import java.nio.charset.StandardCharsets;
+import java.io.IOException;
+>>>>>>> 904f9c24ada0f15c28f774571cbec0e80b08b538
 
 /**
  *
@@ -44,8 +60,11 @@ public class EFront extends Application
     BorderPane border = new BorderPane();
     private int selectedGame = 0;
     private int selectedConsole = 0;
+<<<<<<< HEAD
     private ArrayList<Console> systems = new ArrayList();
     
+=======
+>>>>>>> 904f9c24ada0f15c28f774571cbec0e80b08b538
     @Override
     public void start(Stage primaryStage) 
     {
@@ -74,9 +93,13 @@ public class EFront extends Application
         left.setPadding(new Insets(5,5,5,5));
         left.setSpacing(5);
         ArrayList<Button> temp = new ArrayList<Button>();
+<<<<<<< HEAD
         if(systems.size() == 0) loadTempSystems();
         //loadConfig();
         for (Console sys : systems)
+=======
+        for (Console sys : getSystems())
+>>>>>>> 904f9c24ada0f15c28f774571cbec0e80b08b538
         {
             temp.add(new Button(sys.toString()));
         }
@@ -113,6 +136,7 @@ public class EFront extends Application
             {
                 @Override public void handle(ActionEvent e) 
                 {
+<<<<<<< HEAD
                     systems.get(selectedConsole).runGame(selectedGame);
                 }
             });
@@ -193,15 +217,30 @@ public class EFront extends Application
                 }
             
             });
+=======
+                    getSystems().get(selectedConsole).runGame(selectedGame);
+                }
+            });
+        
+>>>>>>> 904f9c24ada0f15c28f774571cbec0e80b08b538
         right.getChildren().addAll(buttons);
         return right;
     }
     
+<<<<<<< HEAD
     private ArrayList<Console> loadTempSystems()
     {
         systems.add(new Console("Steam","cmd /c \"start steam://run/","\""));
         systems.add(new Console("Gamecube","C:\\Program Files\\Dolphin\\Dolphin.exe -b -e "));
         systems.get(0).addGame(new Game("Team Fortress 2","440"));
+=======
+    private ArrayList<Console> getSystems()
+    {
+        ArrayList<Console> systems = new ArrayList();
+        systems.add(new Console("Steam","cmd -c \"start steam://run/"));
+        systems.add(new Console("Gamecube","C:\\Program Files\\Dolphin\\Dolphin.exe -b -e "));
+        systems.get(0).addGame(new Game("Team Fortress 2","440\""));
+>>>>>>> 904f9c24ada0f15c28f774571cbec0e80b08b538
         systems.get(0).addGame(new Game("Sid Meier's Civilization V","36075"));
         systems.get(0).addGame(new Game("Dust: An Elysian Tail","236090"));
         systems.get(1).addGame(new Game("Project M","C:\\Users\\Kenny\\Downloads\\PM\\ProjectM.iso"));
@@ -214,7 +253,11 @@ public class EFront extends Application
         mid.setPadding(new Insets(5,5,5,5));
         mid.setSpacing(5);
         ArrayList<Button> temp = new ArrayList();
+<<<<<<< HEAD
         final ArrayList<Game> games = systems.get(selectedConsole).getGames();
+=======
+        final ArrayList<Game> games = getSystems().get(selectedConsole).getGames();
+>>>>>>> 904f9c24ada0f15c28f774571cbec0e80b08b538
         for(Game game : games)
         {
             temp.add(new Button(game.getName()));
@@ -235,6 +278,23 @@ public class EFront extends Application
     }
     private void loadConfig()
     {
+<<<<<<< HEAD
         Config config = new Config("efront.cfg");
+=======
+        Path config = FileSystems.getDefault().getPath("efront.ini");
+        ArrayList<String> file;
+        try
+        {
+            file = (ArrayList)Files.readAllLines(config,StandardCharsets.UTF_8);
+        }
+        catch(IOException e)
+        {
+            try
+            {
+                config = Files.createFile(config);
+            }
+            catch(IOException f){}
+        }
+>>>>>>> 904f9c24ada0f15c28f774571cbec0e80b08b538
     }
 }
