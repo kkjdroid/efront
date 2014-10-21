@@ -59,10 +59,9 @@ public class EFront extends Application
     {
         border.setLeft(leftPane());
         border.setRight(rightPane());
-        border.setCenter(new VBox());
-        
+        midPane();
         Scene scene = new Scene(border, 400, 300);
-        
+        scene.getStylesheets().add(EFront.class.getResource("EFront.css").toExternalForm());
         primaryStage.setTitle("EFront");
         primaryStage.setScene(scene);
         primaryStage.show();
@@ -82,20 +81,25 @@ public class EFront extends Application
         left.setPadding(new Insets(5,5,5,5));
         left.setSpacing(5);
         ArrayList<Button> temp = new ArrayList<Button>();
-        if(systems.size() == 0) loadTempSystems();
+        if(systems.size() == 0) systems = loadTempSystems();
         //loadConfig();
         for (Console sys : systems)
         {
             temp.add(new Button(sys.toString()));
         }
         final ArrayList<Button> buttons = temp;
+        if(selectedConsole == 0) buttons.get(0).setId("focused");
         for(Button b : buttons)
         {
+            b.setMaxWidth(Double.MAX_VALUE);
             b.setOnAction(new EventHandler<ActionEvent>() 
             {
                 @Override public void handle(ActionEvent e) 
                 {
+                    buttons.get(selectedConsole).setId(null);
+                    ((Button)e.getSource()).setId("focused");
                     selectedConsole = buttons.indexOf(e.getSource());
+                    selectedGame = 0;
                     midPane();
                 }
             });
@@ -117,6 +121,7 @@ public class EFront extends Application
         buttons.add(new Button("Remove system"));
         buttons.add(new Button("Save"));
         buttons.add(new Button("Load"));
+        for(Button b : buttons) b.setMaxWidth(Double.MAX_VALUE);
         buttons.get(0).setOnAction(new EventHandler<ActionEvent>() 
             {
                 @Override public void handle(ActionEvent e) 
@@ -198,20 +203,14 @@ public class EFront extends Application
                     System.out.print(systems.get(selectedConsole));
                     systems.remove(selectedConsole);
                     border.setLeft(leftPane());
+                    midPane();
                 }
             
             });
         right.getChildren().addAll(buttons);
         return right;
     }
-
-    private void loadTempSystems()
-    {
-        systems.add(new Console("Steam","cmd /c \"start steam://run/","\""));
-        systems.add(new Console("Gamecube","C:\\Program Files\\Dolphin\\Dolphin.exe -b -e "));
-        systems.get(0).addGame(new Game("Team Fortress 2","440"));
-    }
-    private ArrayList<Console> getSystems()
+    private ArrayList<Console> loadTempSystems()
     {
         ArrayList<Console> systems = new ArrayList();
         systems.add(new Console("Steam","cmd -c \"start steam://run/"));
@@ -235,12 +234,16 @@ public class EFront extends Application
             temp.add(new Button(game.getName()));
         }
         final ArrayList<Button> buttons = temp;
+        buttons.get(selectedGame).setId("focused");
         for(Button button : buttons)
         {
+            button.setMaxWidth(Double.MAX_VALUE);
             button.setOnAction(new EventHandler<ActionEvent>() 
             {
                 @Override public void handle(ActionEvent e) 
                 {
+                    buttons.get(selectedGame).setId(null);
+                    ((Button)e.getSource()).setId("focused");
                     selectedGame = buttons.indexOf(e.getSource());
                 }
             });
