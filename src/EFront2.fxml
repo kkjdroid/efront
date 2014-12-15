@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?scenebuilder-stylesheet Efront.css?>
+
+<fx:root maxHeight="600" maxWidth="800" minHeight="600" minWidth="800" prefHeight="400.0" prefWidth="600.0" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<children>
+<VBox stylesheets="@Efront.css">
+   <children>
+      <BorderPane prefHeight="600.0" prefWidth="800.0">
+         <bottom>
+            <ToolBar nodeOrientation="LEFT_TO_RIGHT" prefHeight="40.0" prefWidth="200.0" style="-fx-background-color: blue;" BorderPane.alignment="CENTER">
+              <items>
+                <Button mnemonicParsing="false" styleClass="button" text="Play" />
+                <Button mnemonicParsing="false" text="Settings" />  
+              </items>
+            </ToolBar>
+         </bottom>
+         <left>
+            <VBox>
+              <children>
+                  <Label text="Systems" />
+                  <TreeView layoutX="-86.0" layoutY="-20.0" prefHeight="200.0" prefWidth="200.0" />
+              </children>
+            </VBox>
+         </left>
+         <right>
+            <VBox>
+              <children>
+                  <Label text="Games" />
+                  <TreeView layoutX="-12.0" prefHeight="200.0" prefWidth="132.0" />
+              </children>
+            </VBox>
+         </right>
+         <center>
+            <TilePane prefHeight="200.0" prefWidth="50.0" style="-fx-background-color: white;" BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </TilePane>
+         </center>
+         <top>
+            <Label id="logo" prefHeight="64.0" prefWidth="800.0" text="EFront" textAlignment="CENTER" textFill="WHITE" BorderPane.alignment="CENTER">
+                     <font>
+                        <Font name="System Bold" size="36.0" />
+                     </font>
+            </Label>
+         </top>
+      </BorderPane>
+   </children>
+</VBox>
+</children>
+</fx:root>

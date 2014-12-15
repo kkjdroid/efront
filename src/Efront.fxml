@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.text.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.control.*?>
+<?import java.lang.*?>
+<?import javafx.scene.layout.*?>
+<?import java.net.URL?>
+<?scenebuilder-stylesheet Efront.css?>
+
+<fx:root stylesheets="@Efront.css" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <BorderPane prefHeight="9E9">
+         <bottom>
+            <ToolBar style="-fx-background-color: transparent;" prefWidth="9E9" BorderPane.alignment="CENTER">
+              <items>
+                <Button mnemonicParsing="false" styleClass="button" text="Play" />
+                <Button mnemonicParsing="false" text="Settings" />  
+              </items>
+            </ToolBar>
+         </bottom>
+         <left>
+            <VBox alignment="center">
+              <children>
+                  <Label text="Systems" textAlignment="CENTER" />
+                  <ListView fx:id="consoles" prefHeight="9E9"  />
+              </children>
+            </VBox>
+         </left>
+         <right>
+            <VBox alignment="center" >
+              <children>
+                  <Label text="Games" textAlignment="CENTER" />
+                  <ListView prefHeight="9E9"  />
+              </children>
+            </VBox>
+         </right>
+         <center>
+            <TilePane BorderPane.alignment="CENTER">
+               <children>
+                  <ImageView pickOnBounds="true" preserveRatio="true" />
+              </children>
+            </TilePane>
+         </center>
+      </BorderPane>
+   </children>
+</fx:root>
