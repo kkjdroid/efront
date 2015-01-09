@@ -14,16 +14,10 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package efront;
+package com.kkj.efrontold;
 
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
-import javafx.application.Application;
-import javafx.event.ActionEvent;
+import com.kkj.efront.Console;
+import com.kkj.efront.Game;
 import java.util.ArrayList;
 import javafx.application.Application;
 import javafx.geometry.Insets;
@@ -31,24 +25,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Text;
 import javafx.stage.Modality;
-import javafx.stage.Stage;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import javafx.event.EventHandler;
 import javafx.event.ActionEvent;
-import java.nio.file.Path;
-import java.nio.file.Files;
-import java.nio.file.FileSystems;
-import java.nio.charset.StandardCharsets;
-import java.io.IOException;
 
 /**
  *
  * @author Kenny
  */
-public class EFront extends Application 
+public class Efront extends Application 
 {
     BorderPane border = new BorderPane();
     private int selectedGame = 0;
@@ -61,7 +48,7 @@ public class EFront extends Application
         border.setRight(rightPane());
         midPane();
         Scene scene = new Scene(border, 400, 300);
-        scene.getStylesheets().add(EFront.class.getResource("EFront.css").toExternalForm());
+        scene.getStylesheets().add(Efront.class.getResource("Efront.css").toExternalForm());
         primaryStage.setTitle("EFront");
         primaryStage.setScene(scene);
         primaryStage.show();

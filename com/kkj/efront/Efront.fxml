@@ -14,8 +14,8 @@
          <bottom>
             <ToolBar style="-fx-background-color: transparent;" prefWidth="9E9" BorderPane.alignment="CENTER">
               <items>
-                <Button mnemonicParsing="false" styleClass="button" text="Play" />
-                <Button mnemonicParsing="false" text="Settings" />  
+                <Button mnemonicParsing="false" styleClass="button" text="Play" fx:id="play" />
+                <Button mnemonicParsing="false" styleClass="button" text="Settings" fx:id="settings" />  
               </items>
             </ToolBar>
          </bottom>
@@ -31,7 +31,7 @@
             <VBox alignment="center" >
               <children>
                   <Label text="Games" textAlignment="CENTER" />
-                  <ListView prefHeight="9E9"  />
+                  <ListView fx:id="games" prefHeight="9E9"  />
               </children>
             </VBox>
          </right>

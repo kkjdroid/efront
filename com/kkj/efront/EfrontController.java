@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package efront;
+package com.kkj.efront;
 
 import java.io.IOException;
 import java.net.URL;
@@ -34,6 +34,8 @@ import javafx.scene.control.ToolBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
 
 /**
  * FXML Controller class
@@ -84,10 +86,27 @@ public class EfrontController extends VBox implements Initializable {
         }
         consoles.setItems(items);
     }
+    
+    private void setGames(ArrayList<Game> a)
+    {
+        ObservableList<String> items = FXCollections.observableArrayList();
+        for(Game c : a)
+        {
+            items.add(c.toString());
+        }
+        games.setItems(items);
+    }
+    
     public int getConsole()
     {
-        return consoles.getSelectionModel().getSelectedIndex();
+        return Math.max(consoles.getSelectionModel().getSelectedIndex(),0);
     }
+    
+    public int getGame()
+    {
+        return Math.max(games.getSelectionModel().getSelectedIndex(),0);
+    }
+    
     private void prepDisplay()
     {
         initConsoles();
@@ -95,20 +114,28 @@ public class EfrontController extends VBox implements Initializable {
 
     private void initConsoles()
     {
-        ArrayList<Console> systems = new ArrayList();
-        systems.add(new Console("Steam","cmd -c \"start steam://run/"));
-        systems.add(new Console("Gamecube","C:\\Program Files\\Dolphin\\Dolphin.exe -b -e "));
-        systems.get(0).addGame(new Game("Team Fortress 2","440\""));
-        systems.get(0).addGame(new Game("Sid Meier's Civilization V","36075"));
-        systems.get(0).addGame(new Game("Dust: An Elysian Tail","236090"));
-        systems.get(1).addGame(new Game("Project M","C:\\Users\\Kenny\\Downloads\\PM\\ProjectM.iso"));
-        systems.get(1).addGame(new Game("Brawl","C:\\Users\\Kenny\\Downloads\\PM\\RSBE01.iso"));
-        setConsoles(systems);
+        ArrayList<Console> temp = new ArrayList();
+        temp.add(new Console("Steam","cmd -c \"start steam://run/","\""));
+        temp.add(new Console("Gamecube","C:\\Program Files\\Dolphin\\Dolphin.exe -b -e "));
+        temp.get(0).addGame(new Game("Team Fortress 2","440"));
+        temp.get(0).addGame(new Game("Sid Meier's Civilization V","36075"));
+        temp.get(0).addGame(new Game("Dust: An Elysian Tail","236090"));
+        temp.get(1).addGame(new Game("Project M","C:\\Users\\Kenny\\Downloads\\PM\\ProjectM.iso"));
+        temp.get(1).addGame(new Game("Brawl","C:\\Users\\Kenny\\Downloads\\PM\\RSBE01.iso"));
+        setConsoles(temp);
+        final ArrayList<Console> systems = temp;
         consoles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
             {
-                //setGames(systems.get(getConsole()).getGames());
+                setGames(systems.get(getConsole()).getGames());
+            }
+        });
+        play.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            @Override public void handle(ActionEvent e) 
+            {
+                systems.get(getConsole()).runGame(getGame());
             }
         });
     }

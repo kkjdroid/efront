@@ -14,33 +14,30 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package efront;
-import java.nio.charset.StandardCharsets;
-import java.nio.file.FileSystems;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.util.ArrayList;
+package com.kkj.efront;
 /**
  *
  * @author Kenny
  */
-public class Config 
+public class Game 
 {
-    public Config(String path)
+    private String name = "";
+    private String path = "";
+    public Game(String newname, String newpath)
     {
-        //get config from path
+        name = newname;
+        path = newpath;
     }
-    public ArrayList getSystems()
+    public String getName()
     {
-        ArrayList<Console> systems = new ArrayList();
-        //get systems from config file
-        return systems;
+        return name;
     }
-    public ArrayList getGames()
+    public String getPath()
     {
-        ArrayList<ArrayList<Game>> games = new ArrayList();
-        //getSystems.get(n) should be the console that corresponds to the games in getGames().get(n)
-        return games;
+        return path;
+    }
+    public String toString()
+    {
+        return name;
     }
 }

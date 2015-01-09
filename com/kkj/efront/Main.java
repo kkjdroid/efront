@@ -15,7 +15,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package efront;
+package com.kkj.efront;
 
 import java.util.ArrayList;
 import javafx.application.Application;
@@ -32,9 +32,9 @@ public class Main extends Application
     {
         EfrontController e = new EfrontController();
         ArrayList<Console> systems = new ArrayList();
-        systems.add(new Console("Steam","cmd -c \"start steam://run/"));
+        systems.add(new Console("Steam","cmd -c \"start steam://run/","\""));
         systems.add(new Console("Gamecube","C:\\Program Files\\Dolphin\\Dolphin.exe -b -e "));
-        systems.get(0).addGame(new Game("Team Fortress 2","440\""));
+        systems.get(0).addGame(new Game("Team Fortress 2","440"));
         systems.get(0).addGame(new Game("Sid Meier's Civilization V","36075"));
         systems.get(0).addGame(new Game("Dust: An Elysian Tail","236090"));
         systems.get(1).addGame(new Game("Project M","C:\\Users\\Kenny\\Downloads\\PM\\ProjectM.iso"));
