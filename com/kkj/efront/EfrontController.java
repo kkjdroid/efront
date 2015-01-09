@@ -115,7 +115,7 @@ public class EfrontController extends VBox implements Initializable {
     private void initConsoles()
     {
         ArrayList<Console> temp = new ArrayList();
-        temp.add(new Console("Steam","cmd -c \"start steam://run/","\""));
+        temp.add(new Console("Steam","cmd /c \"start steam://run/","\""));
         temp.add(new Console("Gamecube","C:\\Program Files\\Dolphin\\Dolphin.exe -b -e "));
         temp.get(0).addGame(new Game("Team Fortress 2","440"));
         temp.get(0).addGame(new Game("Sid Meier's Civilization V","36075"));
