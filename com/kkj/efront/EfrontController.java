@@ -124,6 +124,7 @@ public class EfrontController extends VBox implements Initializable {
         temp.get(1).addGame(new Game("Brawl","C:\\Users\\Kenny\\Downloads\\PM\\RSBE01.iso"));
         setConsoles(temp);
         final ArrayList<Console> systems = temp;
+        setGames(systems.get(0).getGames());
         consoles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
