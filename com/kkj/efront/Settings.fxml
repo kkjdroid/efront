@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.net.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<fx:root stylesheets="@Efront.css" type="javafx.scene.layout.VBox" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <BorderPane prefHeight="9E9">
+         <bottom>
+            <ToolBar style="-fx-background-color: transparent;" prefWidth="9E9" BorderPane.alignment="CENTER">
+              <items>
+                <Button mnemonicParsing="false" styleClass="button" text="Play" fx:id="play" />
+                <Button mnemonicParsing="false" styleClass="button" text="Settings" fx:id="settings" />  
+              </items>
+            </ToolBar>
+         </bottom>
+         <center>
+            <TabPane fx:id="tabPane" side="BOTTOM">
+                <tabs>
+                    <Tab text="Untitled Tab 1">
+                    <content>
+                        <AnchorPane id="Content">
+                            <Label>Content 1</Label>
+                        </AnchorPane>
+                    </content>
+                    </Tab>
+                    <Tab text="Untitled Tab 2">
+                    <content>
+                        <AnchorPane id="Content">
+                            <Label>Content 2</Label>
+                        </AnchorPane>
+                    </content>
+                    </Tab>
+                </tabs>
+            </TabPane>
+         </center>
+      </BorderPane>
+    </children>
+</fx:root>

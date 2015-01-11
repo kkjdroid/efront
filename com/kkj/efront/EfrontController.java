@@ -36,6 +36,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.stage.Stage;
 
 /**
  * FXML Controller class
@@ -61,6 +63,7 @@ public class EfrontController extends VBox implements Initializable {
     @FXML private ToolBar bottom;
     @FXML private Button play;
     @FXML private Button settings;
+    private ArrayList<Console> systems;
     
     public EfrontController()
     {
@@ -75,22 +78,28 @@ public class EfrontController extends VBox implements Initializable {
         {
             throw new RuntimeException(e);
         }
-        prepDisplay();
+        initListeners();
     }
-    public void setConsoles(ArrayList<Console> a)
+    
+    public void setConsoles(ArrayList a)
+    {
+        systems = a;
+    }
+    
+    public void refreshConsoles()
     {
         ObservableList<String> items = FXCollections.observableArrayList();
-        for(Console c : a)
+        for(Console c : systems)
         {
             items.add(c.toString());
         }
         consoles.setItems(items);
     }
     
-    private void setGames(ArrayList<Game> a)
+    private void refreshGames()
     {
         ObservableList<String> items = FXCollections.observableArrayList();
-        for(Game c : a)
+        for(Game c : systems.get(getConsole()).getGames())
         {
             items.add(c.toString());
         }
@@ -107,29 +116,15 @@ public class EfrontController extends VBox implements Initializable {
         return Math.max(games.getSelectionModel().getSelectedIndex(),0);
     }
     
-    private void prepDisplay()
-    {
-        initConsoles();
-    }
 
-    private void initConsoles()
+    private void initListeners()
     {
-        ArrayList<Console> temp = new ArrayList();
-        temp.add(new Console("Steam","cmd /c \"start steam://run/","\""));
-        temp.add(new Console("Gamecube","C:\\Program Files\\Dolphin\\Dolphin.exe -b -e "));
-        temp.get(0).addGame(new Game("Team Fortress 2","440"));
-        temp.get(0).addGame(new Game("Sid Meier's Civilization V","36075"));
-        temp.get(0).addGame(new Game("Dust: An Elysian Tail","236090"));
-        temp.get(1).addGame(new Game("Project M","C:\\Users\\Kenny\\Downloads\\PM\\ProjectM.iso"));
-        temp.get(1).addGame(new Game("Brawl","C:\\Users\\Kenny\\Downloads\\PM\\RSBE01.iso"));
-        setConsoles(temp);
-        final ArrayList<Console> systems = temp;
-        setGames(systems.get(0).getGames());
+        refreshGames();
         consoles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue)
             {
-                setGames(systems.get(getConsole()).getGames());
+                refreshGames();
             }
         });
         play.setOnAction(new EventHandler<ActionEvent>() 
@@ -139,5 +134,20 @@ public class EfrontController extends VBox implements Initializable {
                 systems.get(getConsole()).runGame(getGame());
             }
         });
+        settings.setOnAction(new EventHandler<ActionEvent>() 
+        {
+            @Override public void handle(ActionEvent e) 
+            {
+                //settingsDialog();
+            }
+        });
     }
+    /*private void settingsDialog()
+    {
+        SettingsController c = new SettingsController();
+        Stage s = new Stage();
+        s.setScene(new Scene(c,800,500));
+        s.setTitle("EFront Settings");
+        s.show();
+    }*/
 }
