@@ -10,13 +10,14 @@ import java.util.ResourceBundle;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TabPane;
+import javafx.scene.layout.VBox;
 
 /**
  * FXML Controller class
  *
  * @author kenny
  */
-public class SettingsController implements Initializable {
+public class SettingsController extends VBox implements Initializable {
 
     /**
      * Initializes the controller class.

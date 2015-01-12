@@ -37,6 +37,7 @@ import javafx.scene.text.Text;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 /**
@@ -65,8 +66,9 @@ public class EfrontController extends VBox implements Initializable {
     @FXML private Button settings;
     private ArrayList<Console> systems;
     
-    public EfrontController()
+    public EfrontController(ArrayList a)
     {
+        systems = a;
         FXMLLoader l = new FXMLLoader(getClass().getResource("Efront.fxml"));
         l.setRoot(this);
         l.setController(this);
@@ -79,11 +81,6 @@ public class EfrontController extends VBox implements Initializable {
             throw new RuntimeException(e);
         }
         initListeners();
-    }
-    
-    public void setConsoles(ArrayList a)
-    {
-        systems = a;
     }
     
     public void refreshConsoles()
@@ -119,6 +116,7 @@ public class EfrontController extends VBox implements Initializable {
 
     private void initListeners()
     {
+        refreshConsoles();
         refreshGames();
         consoles.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<String>() {
             @Override
@@ -138,16 +136,17 @@ public class EfrontController extends VBox implements Initializable {
         {
             @Override public void handle(ActionEvent e) 
             {
-                //settingsDialog();
+                settingsDialog();
             }
         });
     }
-    /*private void settingsDialog()
+    private void settingsDialog()
     {
         SettingsController c = new SettingsController();
         Stage s = new Stage();
-        s.setScene(new Scene(c,800,500));
+        s.setScene(new Scene(c,500,300));
         s.setTitle("EFront Settings");
+        s.initModality(Modality.APPLICATION_MODAL);
         s.show();
-    }*/
+    }
 }

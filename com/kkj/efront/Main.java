@@ -30,7 +30,6 @@ public class Main extends Application
     @Override
     public void start(Stage s) 
     {
-        EfrontController e = new EfrontController();
         ArrayList<Console> systems = new ArrayList();
         systems.add(new Console("Steam","cmd -c \"start steam://run/","\""));
         systems.add(new Console("Gamecube","C:\\Program Files\\Dolphin\\Dolphin.exe -b -e "));
@@ -39,7 +38,7 @@ public class Main extends Application
         systems.get(0).addGame(new Game("Dust: An Elysian Tail","236090"));
         systems.get(1).addGame(new Game("Project M","C:\\Users\\Kenny\\Downloads\\PM\\ProjectM.iso"));
         systems.get(1).addGame(new Game("Brawl","C:\\Users\\Kenny\\Downloads\\PM\\RSBE01.iso"));
-        e.setConsoles(systems);
+        EfrontController e = new EfrontController(systems);
         s.setScene(new Scene(e, 800, 500));
         s.setTitle("EFront");
         s.show();
