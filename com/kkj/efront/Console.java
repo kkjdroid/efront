@@ -85,11 +85,11 @@ public class Console
         {
             String s = bin + games.get(game).getPath() + finalArgs;
             Process process = Runtime.getRuntime().exec(s);
-            System.out.print(s);
+            System.out.print(s + "\n");
         }
         catch(IOException e)
         {
-            System.out.println("Either your emulator or your game doesn't exist.");
+            System.out.print("Either your emulator or your game doesn't exist.\n");
         }
     }
 }
